@@ -14,7 +14,7 @@ const Topbar = () => {
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
       <div>
-        <Link className={styles['main-nav-item']} to={'/sign-in'}>
+        <Link className={styles['main-nav-item']} to={'/login'}>
           <FaCircleUser />
           Sign In
         </Link>

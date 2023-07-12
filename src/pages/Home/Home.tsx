@@ -1,5 +1,5 @@
-import Features from '../components/Features/Features';
-import HeroBanner from '../components/HeroBanner/HeroBanner';
+import Features from '../../components/Features/Features';
+import HeroBanner from '../../components/HeroBanner/HeroBanner';
 import './Home.module.scss';
 
 function Home() {
