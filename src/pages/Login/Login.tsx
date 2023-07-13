@@ -1,20 +1,28 @@
 import { FormEvent, useRef } from 'react';
 import styles from './Login.module.scss';
 import { FaCircleUser } from 'react-icons/fa6';
-import { statusLogin } from '../../services/postLogin.ts';
+import { statusLogin } from '../../services/api.ts';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, signInReducer } from '../../store/store.ts';
 
 const Login = () => {
   const refUsername = useRef<HTMLInputElement>(null);
   const refPassword = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const signIn = (e: FormEvent) => {
     e.preventDefault();
 
     statusLogin(refUsername.current!.value, refPassword.current!.value).then(
       (response) => {
-        response.status === 200 && navigate('/profile');
+        if (response.status === 200) {
+          dispatch(
+            signInReducer({ statusLogin: true, token: response.body.token })
+          );
+          navigate('/profile');
+        }
       }
     );
   };
