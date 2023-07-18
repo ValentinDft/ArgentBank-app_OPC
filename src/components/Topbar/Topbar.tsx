@@ -1,14 +1,35 @@
 import styles from './Topbar.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { FaCircleUser } from 'react-icons/fa6';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  AppDispatch,
+  RootState,
+  dataUserReducer,
+  signInReducer,
+} from '../../store/store';
 
 const Topbar = () => {
   const userLogin = useSelector((state: RootState) => state.login);
   const userData = useSelector((state: RootState) => state.user);
-  console.log(userData);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    dispatch(signInReducer({ statusLogin: false, token: null }));
+    dispatch(
+      dataUserReducer({
+        email: null,
+        firstName: null,
+        lastName: null,
+        createdAt: null,
+        updatedAt: null,
+        id: null,
+      })
+    );
+    navigate('/');
+  };
 
   return (
     <nav className={styles['main-nav']}>
@@ -20,14 +41,20 @@ const Topbar = () => {
         />
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
-      {userLogin.statusLogin && <span>{userData.firstName}</span>}
-      <div>
+
+      <div className={styles['main-nav-container']}>
+        {userLogin.statusLogin && (
+          <Link className={styles['main-nav-item']} to={'/profile'}>
+            <FaCircleUser />
+            {userData.firstName}
+          </Link>
+        )}
         {userLogin.statusLogin ? (
           // Faire la logique de deconnection navigation
-          <Link className={styles['main-nav-item']} to={'/'}>
+          <div className={styles['sign-out']} onClick={signOut}>
             <FaSignOutAlt />
             Sign Out
-          </Link>
+          </div>
         ) : (
           <Link className={styles['main-nav-item']} to={'/login'}>
             <FaCircleUser />
