@@ -2,15 +2,18 @@ import styles from './Profile.module.scss';
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState, dataUserReducer } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { dataProfile } from '../../services/api';
 import { useDispatch } from 'react-redux';
+import UpdateName from '../../components/UpdateName/UpdateName';
+import { FaAngleLeft } from 'react-icons/fa6';
 
 const Profile = () => {
   const userLogin = useSelector((state: RootState) => state.login);
   const userData = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [showUpdateName, setShowUpdateName] = useState(false);
 
   useEffect(() => {
     if (!userLogin.statusLogin) {
@@ -22,18 +25,35 @@ const Profile = () => {
         }
       });
     }
-  }, [userLogin.statusLogin]);
+  }, [userLogin.statusLogin, showUpdateName]);
+
+  const editProfile = () => {
+    setShowUpdateName(!showUpdateName);
+  };
 
   if (userLogin.statusLogin) {
     return (
       <main className={styles['container-profile']}>
         <div className={styles['header']}>
-          <h1>
-            Welcome back
-            <br />
-            {userData.firstName} {userData.lastName}!
-          </h1>
-          <button className={styles['edit-button']}>Edit Name</button>
+          {showUpdateName ? (
+            <UpdateName isOpen={setShowUpdateName} />
+          ) : (
+            <h1>
+              Welcome back
+              <br />
+              {userData.firstName} {userData.lastName}
+            </h1>
+          )}
+          <button className={styles['edit-button']} onClick={editProfile}>
+            {showUpdateName ? (
+              <div style={{ display: 'flex' }}>
+                <FaAngleLeft />
+                <p>Back</p>
+              </div>
+            ) : (
+              'Edit Name'
+            )}
+          </button>
         </div>
         <h2 className='sr-only'>Accounts</h2>
         <section className={styles['account']}>

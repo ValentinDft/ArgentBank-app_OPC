@@ -1,7 +1,8 @@
 .container-profile {
   background-color: #12002b;
   padding-top: 15px;
-  height: calc(100vh - 65px - 95px);
+  height: calc(100vh - 65px);
+  overflow: scroll;
 }
 
 .header {
