@@ -1,0 +1,518 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /transactions:
+    get:
+      tags:
+        - User Transaction
+      summary: User transactions API
+      description: API to get an array with all the user transactions
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description:   User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid token
+        '500':
+          description: Internal Server Error
+          
+  /transactions/{id}:
+    get:
+      tags:
+        - User Transaction
+      summary: User transaction details API
+      description: API to get the details of one transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: id of the transaction
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description:   User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid token
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - User Transaction
+      summary: User update transaction details API
+      description: API for modify the details of a transaction  
+      parameters:
+        - name: body
+          in: body
+          description: details of the transaction needs to be edit
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateDetailsTransactionBody'
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: id
+          description: id of the transaction
+          required: true
+          type: integer
+      responses:
+        '200':
+            description: Transactions update successully
+            schema:
+                $ref: '#/definitions/EditedDetailsTransaction'
+        '400':
+            description: Invalid transaction id or token 
+        '500':
+            description: Internal Server Error
+    post:
+      tags:
+        - User Transaction
+      summary: User add transaction details API
+      description: API for add some details of a transaction  
+      parameters:
+        - name: body
+          in: body
+          description: Add the name and the value of the details you want to add in your transaction
+          required: true
+          schema:
+            $ref: '#/definitions/AddDetailsTransactionBody'
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: id
+          description: id of the transaction
+          required: true
+          type: integer
+      responses:
+        '200':
+            description: Transactions update successully
+            schema:
+                $ref: '#/definitions/AddDetailsTransaction'
+        '400':
+            description: Invalid transaction id or token 
+        '500':
+            description: Internal Server Error
+    delete:
+      tags:
+        - User Transaction
+      summary: User delete transaction details API
+      description: API for delete some details of a transaction  
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: path
+          name: id
+          description: id of the transaction
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: id of the details you want to delete
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteDetailsTransactionBody'
+      responses:
+        '200':
+            description: Category details transactions deleted successully
+            schema:
+              $ref: '#/definitions/DeleteDetailsTransaction'
+        '400':
+            description: Invalid transaction id or token 
+        '500':
+            description: Internal Server Error
+          
+          
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: transaction ID
+        example: 12345324324
+      created:
+        type: string
+        description: transaction date
+        example: "July 29th, 2023"
+      description:
+        type: string
+        description: transaction description
+        example: "Fnac"
+      amount:
+        type: number
+        description: transaction amount
+        example: 25
+      balance:
+        type: number
+        description: account balance after transaction
+        example: 2547
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            value:
+              type: string
+          example:
+            - id: 123
+              name: "category"
+              value: "recreation"
+            - id: 456
+              name: "memo"
+              value: "Fnac transaction"
+  Transactions:
+    type: object
+    properties:
+      body:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  UpdateDetailsTransactionBody:
+    type: object
+    properties:
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            value:
+              type: string
+          example:
+            - id: 123
+              name: "category"
+              value: "Education"
+            - id: 456
+              name: "memo"
+              value: "IT Books"
+  EditedDetailsTransaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: transaction ID
+        example: 12345324324
+      created:
+        type: string
+        description: transaction date
+        example: "July 29th, 2023"
+      description:
+        type: string
+        description: transaction description
+        example: "Fnac"
+      amount:
+        type: number
+        description: transaction amount
+        example: 25
+      balance:
+        type: number
+        description: account balance after transaction
+        example: 2547
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            value:
+              type: string
+          example:
+            - id: 123
+              name: "category"
+              value: "Education"
+            - id: 456
+              name: "memo"
+              value: "IT Books"
+  AddDetailsTransactionBody:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "tag"
+      value:
+        type: string
+        example: "School"
+  AddDetailsTransaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: transaction ID
+        example: 12345324324
+      created:
+        type: string
+        description: transaction date
+        example: "July 29th, 2023"
+      description:
+        type: string
+        description: transaction description
+        example: "Fnac"
+      amount:
+        type: number
+        description: transaction amount
+        example: 25
+      balance:
+        type: number
+        description: account balance after transaction
+        example: 2547
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            value:
+              type: string
+          example:
+            - id: 123
+              name: "category"
+              value: "Education"
+            - id: 456
+              name: "memo"
+              value: "IT Books"
+            - id: 967
+              name: "tag"
+              value: "School"
+  DeleteDetailsTransactionBody:
+    type: object
+    properties:
+      idDetails:
+        type: number
+        example: 123
+  DeleteDetailsTransaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: transaction ID
+        example: 12345324324
+      created:
+        type: string
+        description: transaction date
+        example: "July 29th, 2023"
+      description:
+        type: string
+        description: transaction description
+        example: "Fnac"
+      amount:
+        type: number
+        description: transaction amount
+        example: 25
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            value:
+              type: string
+          example:
+            - id: 456
+              name: "memo"
+              value: "IT Books"
