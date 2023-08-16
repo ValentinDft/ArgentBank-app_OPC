@@ -230,7 +230,7 @@ paths:
       tags:
         - User Transaction
       summary: User delete transaction details API
-      description: API for delete some details of a transaction  
+      description: API for delete the details of a transaction  
       parameters:
         - in: header
           name: Authorization
@@ -242,15 +242,9 @@ paths:
           description: id of the transaction
           required: true
           type: integer
-        - in: body
-          name: body
-          description: id of the details you want to delete
-          required: true
-          schema:
-            $ref: '#/definitions/DeleteDetailsTransactionBody'
       responses:
         '200':
-            description: Category details transactions deleted successully
+            description: details transactions deleted successully
             schema:
               $ref: '#/definitions/DeleteDetailsTransaction'
         '400':
@@ -476,12 +470,6 @@ definitions:
             - id: 967
               name: "tag"
               value: "School"
-  DeleteDetailsTransactionBody:
-    type: object
-    properties:
-      idDetails:
-        type: number
-        example: 123
   DeleteDetailsTransaction:
     type: object
     properties:
@@ -501,18 +489,3 @@ definitions:
         type: number
         description: transaction amount
         example: 25
-      details:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            value:
-              type: string
-          example:
-            - id: 456
-              name: "memo"
-              value: "IT Books"
