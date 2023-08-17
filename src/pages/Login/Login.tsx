@@ -35,31 +35,16 @@ const Login = () => {
         <form onSubmit={(e) => signIn(e)}>
           <div className={styles['input-wrapper']}>
             <label htmlFor='username'>Username</label>
-            <input
-              type='text'
-              id='username'
-              value={'tony@stark.com'}
-              ref={refUsername}
-            />
+            <input type='text' id='username' ref={refUsername} />
           </div>
           <div className={styles['input-wrapper']}>
             <label htmlFor='password'>Password</label>
-            <input
-              type='password'
-              id='password'
-              value={'password123'}
-              ref={refPassword}
-            />
+            <input type='password' id='password' ref={refPassword} />
           </div>
           <div className={styles['input-remember']}>
             <input type='checkbox' id='remember-me' />
             <label htmlFor='remember-me'>Remember me</label>
           </div>
-          {/* PLACEHOLDER DUE TO STATIC SITE  */}
-          {/* <a href='./user.html' className={styles['sign-in-button']}>
-            Sign In
-          </a> */}
-          {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
           <button className={styles['sign-in-button']} type='submit'>
             Sign In
           </button>
