@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { FormEvent, useRef } from 'react';
 import styles from './Login.module.scss';
 import { FaCircleUser } from 'react-icons/fa6';

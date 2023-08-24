@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './UpdateName.module.scss';
 import { useDispatch, useSelector } from 'react-redux';

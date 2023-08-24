@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './Profile.module.scss';
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState, dataUserReducer } from '../../store/store';

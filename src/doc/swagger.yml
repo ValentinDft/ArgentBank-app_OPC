@@ -128,14 +128,14 @@ paths:
         - application/json
       responses:
         '200':
-          description:   User transactions retrieved successully
+          description: User transactions retrieved successully
           schema:
             $ref: '#/definitions/Transactions'
         '400':
           description: Invalid token
         '500':
           description: Internal Server Error
-          
+
   /transactions/{id}:
     get:
       tags:
@@ -157,7 +157,7 @@ paths:
         - application/json
       responses:
         '200':
-          description:   User transactions retrieved successully
+          description: User transactions retrieved successully
           schema:
             $ref: '#/definitions/Transaction'
         '400':
@@ -168,7 +168,7 @@ paths:
       tags:
         - User Transaction
       summary: User update transaction details API
-      description: API for modify the details of a transaction  
+      description: API for modify the details of a transaction
       parameters:
         - name: body
           in: body
@@ -188,18 +188,18 @@ paths:
           type: integer
       responses:
         '200':
-            description: Transactions update successully
-            schema:
-                $ref: '#/definitions/EditedDetailsTransaction'
+          description: Transactions update successully
+          schema:
+            $ref: '#/definitions/EditedDetailsTransaction'
         '400':
-            description: Invalid transaction id or token 
+          description: Invalid transaction id or token
         '500':
-            description: Internal Server Error
+          description: Internal Server Error
     post:
       tags:
         - User Transaction
       summary: User add transaction details API
-      description: API for add some details of a transaction  
+      description: API for add some details of a transaction
       parameters:
         - name: body
           in: body
@@ -219,18 +219,18 @@ paths:
           type: integer
       responses:
         '200':
-            description: Transactions update successully
-            schema:
-                $ref: '#/definitions/AddDetailsTransaction'
+          description: Transactions update successully
+          schema:
+            $ref: '#/definitions/AddDetailsTransaction'
         '400':
-            description: Invalid transaction id or token 
+          description: Invalid transaction id or token
         '500':
-            description: Internal Server Error
+          description: Internal Server Error
     delete:
       tags:
         - User Transaction
       summary: User delete transaction details API
-      description: API for delete the details of a transaction  
+      description: API for delete the details of a transaction
       parameters:
         - in: header
           name: Authorization
@@ -244,15 +244,14 @@ paths:
           type: integer
       responses:
         '200':
-            description: details transactions deleted successully
-            schema:
-              $ref: '#/definitions/DeleteDetailsTransaction'
+          description: details transactions deleted successully
+          schema:
+            $ref: '#/definitions/DeleteDetailsTransaction'
         '400':
-            description: Invalid transaction id or token 
+          description: Invalid transaction id or token
         '500':
-            description: Internal Server Error
-          
-          
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -310,18 +309,14 @@ definitions:
   Transaction:
     type: object
     properties:
-      id:
-        type: integer
-        description: transaction ID
-        example: 12345324324
       created:
         type: string
         description: transaction date
-        example: "July 29th, 2023"
+        example: 'July 29th, 2023'
       description:
         type: string
         description: transaction description
-        example: "Fnac"
+        example: 'Fnac'
       amount:
         type: number
         description: transaction amount
@@ -335,19 +330,15 @@ definitions:
         items:
           type: object
           properties:
-            id:
-              type: integer
             name:
               type: string
             value:
               type: string
           example:
-            - id: 123
-              name: "category"
-              value: "recreation"
-            - id: 456
-              name: "memo"
-              value: "Fnac transaction"
+            - name: 'category'
+              value: 'recreation'
+            - name: 'memo'
+              value: 'Fnac transaction'
   Transactions:
     type: object
     properties:
@@ -363,34 +354,26 @@ definitions:
         items:
           type: object
           properties:
-            id:
-              type: integer
             name:
               type: string
             value:
               type: string
           example:
-            - id: 123
-              name: "category"
-              value: "Education"
-            - id: 456
-              name: "memo"
-              value: "IT Books"
+            - name: 'category'
+              value: 'Education'
+            - name: 'memo'
+              value: 'IT Books'
   EditedDetailsTransaction:
     type: object
     properties:
-      id:
-        type: integer
-        description: transaction ID
-        example: 12345324324
       created:
         type: string
         description: transaction date
-        example: "July 29th, 2023"
+        example: 'July 29th, 2023'
       description:
         type: string
         description: transaction description
-        example: "Fnac"
+        example: 'Fnac'
       amount:
         type: number
         description: transaction amount
@@ -404,43 +387,35 @@ definitions:
         items:
           type: object
           properties:
-            id:
-              type: integer
             name:
               type: string
             value:
               type: string
           example:
-            - id: 123
-              name: "category"
-              value: "Education"
-            - id: 456
-              name: "memo"
-              value: "IT Books"
+            - name: 'category'
+              value: 'Education'
+            - name: 'memo'
+              value: 'IT Books'
   AddDetailsTransactionBody:
     type: object
     properties:
       name:
         type: string
-        example: "tag"
+        example: 'tag'
       value:
         type: string
-        example: "School"
+        example: 'School'
   AddDetailsTransaction:
     type: object
     properties:
-      id:
-        type: integer
-        description: transaction ID
-        example: 12345324324
       created:
         type: string
         description: transaction date
-        example: "July 29th, 2023"
+        example: 'July 29th, 2023'
       description:
         type: string
         description: transaction description
-        example: "Fnac"
+        example: 'Fnac'
       amount:
         type: number
         description: transaction amount
@@ -454,37 +429,28 @@ definitions:
         items:
           type: object
           properties:
-            id:
-              type: integer
             name:
               type: string
             value:
               type: string
           example:
-            - id: 123
-              name: "category"
-              value: "Education"
-            - id: 456
-              name: "memo"
-              value: "IT Books"
-            - id: 967
-              name: "tag"
-              value: "School"
+            - name: 'category'
+              value: 'Education'
+            - name: 'memo'
+              value: 'IT Books'
+            - name: 'tag'
+              value: 'School'
   DeleteDetailsTransaction:
     type: object
     properties:
-      id:
-        type: integer
-        description: transaction ID
-        example: 12345324324
       created:
         type: string
         description: transaction date
-        example: "July 29th, 2023"
+        example: 'July 29th, 2023'
       description:
         type: string
         description: transaction description
-        example: "Fnac"
+        example: 'Fnac'
       amount:
         type: number
         description: transaction amount

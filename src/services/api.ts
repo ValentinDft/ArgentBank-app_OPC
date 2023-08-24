@@ -15,13 +15,14 @@ export const statusLogin = async (email: string, password: string) => {
     body: JSON.stringify(data),
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Une erreur s'est produite lors de la requête.");
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Email ou mot de passe incorrect');
       }
-      return response.json();
     })
     .catch((error) => {
-      console.error(error);
+      alert(error);
       throw error;
     });
 };
@@ -35,13 +36,14 @@ export const dataProfile = async (token: string) => {
     },
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Une erreur s'est produite lors de la requête.");
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Token invalide');
       }
-      return response.json();
     })
     .catch((error) => {
-      console.error(error);
+      alert(error);
       throw error;
     });
 };
@@ -65,13 +67,14 @@ export const updateProfile = async (
     body: JSON.stringify(data),
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Une erreur s'est produite lors de la requête.");
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Token ou information invalide');
       }
-      return response.json();
     })
     .catch((error) => {
-      console.error(error);
+      alert(error);
       throw error;
     });
 };
